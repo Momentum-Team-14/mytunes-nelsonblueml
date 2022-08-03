@@ -28,6 +28,7 @@ function showSearchResults(songArray) {
     let imgDiv = document.createElement('img')
     imgDiv.classList.add('image');
     imgDiv.src = songRec.artworkUrl100;
+    // imgDiv.src = songRec.artistViewUrl;
     songDiv.appendChild(imgDiv);
 
     let titleDiv = document.createElement('div')
