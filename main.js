@@ -1,24 +1,40 @@
-const container = document.querySelector('#container');
-console.log('container div', container)
+console.log('connected!')
 
-// let searchUrl = 'https://api.artic.edu/api/v1/artworks?page=2&limit=100'
-// let searchUrl = 'https://itunes.apple.com/search?term=jack+johnson'
-let searchUrl = 'https://proxy-itunes-api.glitch.me/search?term=jack+johnson&limit=10'
+let container = document.querySelector('#container')
+console.log('results div', container)
 
-fetch(searchUrl, {
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' }
+// let searchBaseUrl = 'https://api.artic.edu/api/v1/artworks/search?q='
+let searchBaseUrl = 'https://proxy-itunes-api.glitch.me/search?term='
+
+let searchForm = document.querySelector('#search-form')
+
+searchForm.addEventListener('submit', (event) => {
+    event.preventDefault()
+    let searchBox = document.querySelector('#search-box')
+    let searchUrl = `${searchBaseUrl}${searchBox.value}`
+    console.log('search url', searchUrl)
+    getSearchResults(searchUrl)
 })
-.then(function (response) {
-  return response.json();
-})
-.then(function (data) {
-  let songs = data.results;
-  showSearchResults(songs);
-})
+
+function getSearchResults(url) {
+    fetch(url, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    })
+        // response is whatever the fetch returns
+        .then(function (response) {
+            return response.json()
+        })
+        // data is whatever the above code returns, in this case response.json()
+        .then(function (data) {
+            console.log(data.results)
+            showSearchResults(data.results)
+        })
+}
 
 function showSearchResults(songArray) {
-  console.log(`songArray:\n${songArray}`);
+  console.log(songArray);
+
   for (let songRec of songArray) {
     console.log(songRec);
     let songDiv = document.createElement('div');
@@ -28,7 +44,6 @@ function showSearchResults(songArray) {
     let imgDiv = document.createElement('img')
     imgDiv.classList.add('image');
     imgDiv.src = songRec.artworkUrl100;
-    // imgDiv.src = songRec.artistViewUrl;
     songDiv.appendChild(imgDiv);
 
     let titleDiv = document.createElement('div')

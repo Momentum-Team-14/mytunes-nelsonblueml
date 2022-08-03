@@ -1,10 +1,10 @@
-body {
+h1 {
+  color: #0000a0;
+  text-align: center;
 }
 
-header {
-  color: darkblue;
-  text-align: center;
-  /* font-size: 1.5rem; */
+h3 {
+  color: #0000a0;
 }
 
 #container {
@@ -14,6 +14,6 @@ header {
 }
 
 .songRec {
-  margin: 1.5rem 1rem;
+  margin: 1rem 0;
   width: 10rem;
 }
