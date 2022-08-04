@@ -16,27 +16,6 @@ searchForm.addEventListener('submit', (event) => {
   }
 })
 
-// function getSearchResults(url) {
-//   fetch(url, {
-//     method: 'GET',
-//     headers: { 'Content-Type': 'text/javascript; charset=utf-8' }
-//     })
-//     // response is whatever the fetch returns
-//     .then(response => response.json()
-//       )
-//     // data is whatever the above code returns, in this case response.json()
-//     .then(data => {
-//       let songs = data.results;
-//       console.log('In second .then()');
-//       console.log(`data.results: ${data.results}`);
-//       showSearchResults(songs);
-//     })
-// }
-
-// Testing for fetch failure - result.ok is false
-// Should raise an alert
-getSearchResults('foobar');
-
 function getSearchResults(url) {
     fetch(url) 
   // response is whatever fetch returns
@@ -58,10 +37,6 @@ function getSearchResults(url) {
     alert('ERROR! Something went wrong. Please retry your search.\nJust testing here.')
   });
 }
-
-
-
-
 
 function showSearchResults(songArray) {
   console.log(`songArray: ${songArray}`);
@@ -109,3 +84,8 @@ function deleteOldSongs() {
   let audioElement = document.querySelector('#musicPlayer');
   audioElement.src = '';
 }
+
+// Testing for fetch failure - result.ok is false
+// Should raise an alert
+// Uncomment the following line to run the test
+// getSearchResults('foobar');
