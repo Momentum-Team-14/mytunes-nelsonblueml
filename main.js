@@ -22,13 +22,15 @@ function getSearchResults(url) {
     // data is whatever the above code returns, in this case response.json()
     .then(data => {
       let songs = data.results;
-      console.log(songs);
+      // console.log(songs);
       showSearchResults(songs);
     })
 }
 
 function showSearchResults(songArray) {
   console.log(songArray);
+
+  deleteOldSongs();
 
   for (let songRec of songArray) {
     let songDiv = document.createElement('div');
@@ -58,5 +60,12 @@ function showSearchResults(songArray) {
       audioElement.src = songRec.previewUrl;
       currentSong.innerText = `Currently playing: ${songRec.trackName} by ${songRec.artistName}.`
     }
+  }
+}
+
+function deleteOldSongs() {
+  const containerDiv = document.getElementById("container");
+  while (containerDiv.lastElementChild) {
+    containerDiv.removeChild(containerDiv.lastElementChild);
   }
 }
