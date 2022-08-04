@@ -1,42 +1,36 @@
-console.log('connected!')
+let container = document.querySelector('#container');
 
-let container = document.querySelector('#container')
-console.log('results div', container)
+let searchBaseUrl = 'https://proxy-itunes-api.glitch.me/search?term=';
 
-// let searchBaseUrl = 'https://api.artic.edu/api/v1/artworks/search?q='
-let searchBaseUrl = 'https://proxy-itunes-api.glitch.me/search?term='
-
-let searchForm = document.querySelector('#search-form')
-
+let searchForm = document.querySelector('#search-form');
 searchForm.addEventListener('submit', (event) => {
-    event.preventDefault()
-    let searchBox = document.querySelector('#search-box')
-    let searchUrl = `${searchBaseUrl}${searchBox.value}`
-    console.log('search url', searchUrl)
-    getSearchResults(searchUrl)
+  event.preventDefault();
+  let searchBox = document.querySelector('#search-box');
+  let urlEnd = searchBox.value.replaceAll(' ', '+');
+  let searchUrl = `${searchBaseUrl}${searchBox.value}&limit=20`;
+  console.log('search url', searchUrl);
+  getSearchResults(searchUrl);
 })
 
 function getSearchResults(url) {
-    fetch(url, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
+  fetch(url, {
+    method: 'GET',
+    headers: { 'Content-Type': 'text/javascript; charset=utf-8' }
     })
-        // response is whatever the fetch returns
-        .then(function (response) {
-            return response.json()
-        })
-        // data is whatever the above code returns, in this case response.json()
-        .then(function (data) {
-            console.log(data.results)
-            showSearchResults(data.results)
-        })
+    // response is whatever the fetch returns
+    .then(response => response.json())
+    // data is whatever the above code returns, in this case response.json()
+    .then(data => {
+      let songs = data.results;
+      console.log(songs);
+      showSearchResults(songs);
+    })
 }
 
 function showSearchResults(songArray) {
   console.log(songArray);
 
   for (let songRec of songArray) {
-    console.log(songRec);
     let songDiv = document.createElement('div');
     songDiv.classList.add('songRec');
     container.appendChild(songDiv);
@@ -55,5 +49,14 @@ function showSearchResults(songArray) {
     artistDiv.classList.add('band');
     artistDiv.innerText = `${songRec.artistName}`;
     songDiv.appendChild(artistDiv);
+
+    let audioElement = document.querySelector('#musicPlayer');
+    let currentSong = document.querySelector('.currentSong');
+
+    songDiv.addEventListener('click', playAudio);
+    function playAudio() {
+      audioElement.src = songRec.previewUrl;
+      currentSong.innerText = `Currently playing: ${songRec.trackName} by ${songRec.artistName}.`
+    }
   }
 }
