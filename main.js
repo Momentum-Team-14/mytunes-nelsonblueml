@@ -9,7 +9,6 @@ searchForm.addEventListener('submit', (event) => {
   let urlEnd = searchBox.value.replaceAll(' ', '+');
   if (searchBox.value !== '') {
     let searchUrl = `${searchBaseUrl}${searchBox.value}&limit=20`;
-    console.log('search url', searchUrl);
     getSearchResults(searchUrl);
   } else {
     alert('You must enter a search term.')
@@ -28,18 +27,14 @@ function getSearchResults(url) {
   // data is whatever the above code returns, in this case response.json()
   .then(data => {
     let songs = data.results;
-    console.log('In second .then()');
-    console.log(`data.results: ${data.results}`);
     showSearchResults(songs);
   })
   .catch((error) => {
-    console.log('Something went wrong.', error); 
     alert('ERROR! Something went wrong. Please retry your search.\nJust testing here.')
   });
 }
 
 function showSearchResults(songArray) {
-  console.log(`songArray: ${songArray}`);
   if (songArray.length === 0) {
     alert('No results found.');
   } else {
